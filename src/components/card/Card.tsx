@@ -1,7 +1,7 @@
-import "./Card.css";
+import styles from "./Card.module.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Tarea } from "../../domain/Data";
-import { createRef, MouseEventHandler, useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 
 type CardProps = {
   tarea: Tarea;
@@ -20,9 +20,7 @@ function Card(props: CardProps) {
     setTareas(tareas.filter((t) => t.id !== tarea.id));
   };
 
-  const handleSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSubmit = () => {
     setEditando(false);
     setTareas([...tareas]);
   };
@@ -43,9 +41,9 @@ function Card(props: CardProps) {
   };
 
   return (
-    <div className="card">
-      <div className="card-left">
-        <div className="input-container">
+    <div className={styles.card}>
+      <div className={styles.cardLeft}>
+        <div className={styles.inputContainer}>
           {editando ? (
             <>
               <input
@@ -54,19 +52,24 @@ function Card(props: CardProps) {
                 value={tarea.title}
                 onChange={handleChange}
               />
-              <button className="btn confirm-btn" onClick={handleSubmit}>
-                <i className="fa-regular fa-circle-check"></i>
+              <button
+                className={`btn ${styles.confirmBtn}`}
+                onClick={handleSubmit}
+              >
+                <i
+                  className={`fa-regular fa-circle-check ${styles.confirmIcon}`}
+                ></i>
               </button>
             </>
           ) : (
-            <p className="desc">{tarea.title}</p>
+            <p className={styles.desc}>{tarea.title}</p>
           )}
         </div>
-        <p className="date">
+        <p className={styles.date}>
           {now.toLocaleDateString()} - {now.toLocaleTimeString()}
         </p>
       </div>
-      <div className="card-right">
+      <div className={styles.cardRight}>
         <button className="btn" onClick={eliminarTarea}>
           <i className="fas fa-trash-alt"></i>
         </button>
